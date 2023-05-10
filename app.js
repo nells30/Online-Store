@@ -11,7 +11,7 @@ app.use(shopRoutes)
 app.use(bodyParser.urlencoded({extended : false}))
 
 app.use((req, res, next) => {
-    res.status(400).sendFile(path.join(__dirname, 'views', 'page-error.html'))
+    res.status(404).sendFile(path.join(__dirname, 'views', 'page-error.html'))
 })
 app.listen(3000,() => {
     console.log('Listening to server on port 3000')
