@@ -1,10 +1,15 @@
-const express = require('express')
-const router = express.Router()
-const path = require('path')
+const path = require('path');
+
+const express = require('express');
+
+const rootDir = require('../util/path');
+const adminData = require('./admin');
+
+const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    console.log('In the main middleware')
-    res.sendFile(path.join(__dirname, '../', 'views', 'shop.html'))
+  console.log('shop.js', adminData.products);
+  res.render('shop');
 });
 
 module.exports = router;

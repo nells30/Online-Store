@@ -1,19 +1,24 @@
-const Express = require('express')
-const bodyParser = require('body-parser')
-const app = Express()
-const adminRoutes = require('./routes/admin')
-const shopRoutes = require('./routes/shop')
-const path = require('path')
+const path = require('path');
 
-app.use('/admin', adminRoutes)
-app.use(shopRoutes)
+const express = require('express');
+const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({extended : false}))
-app.use(Express.static(path.join(__dirname, 'public')))
+const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', 'views')
+
+const adminData = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/admin', adminData.routes);
+app.use(shopRoutes);
 
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', 'page-error.html'))
-})
-app.listen(3000,() => {
-    console.log('Listening to server on port 3000')
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
+
+app.listen(3000, console.log('Listening to server...'))
